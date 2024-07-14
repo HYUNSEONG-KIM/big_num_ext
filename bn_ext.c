@@ -1,7 +1,5 @@
 #include "bn_ext.h"
 
-#include<string.h>
-
 // Minor utilities 
 bool bignum_is_even(struct bn* n){return (n->array[0] & 1) == 0;}
 bool bignum_is_odd(struct  bn* n){return !(bignum_is_even(n));}
@@ -18,18 +16,31 @@ unsigned int bignum_bit_count(struct bn* n){
     return count;
 }
 int _fast_bit_count32 (unsigned int n) {
-    // Only work for 32 bit length
-    return bits_in_char[n & 0xffu]
-      +  bits_in_char[(n >>  8 ) & 0xffu]
-      +  bits_in_char[(n >> 16) & 0xffu]
-      +  bits_in_char[(n >> 24) & 0xffu];
+    // This algorithm only works for 32bit integer,
+    // so that, it is well fits with tiny-big-num library.
+
+    /* 
+    // Algorithm description:
+    // 0xffu(16) = 255(10)  = 11111111(2)
+    // n&0xffu
+    //    n :..11101110|01101010
+    // 0xffu:..00000000|11111111
+    // n&0xffu:00000000|01101010
+    // -> After the count, shift the bit to right and iteratively sum.
+    */
+
+    return BITS_TABLE_uint32[n & 0xffu]
+          +BITS_TABLE_uint32[(n >>  8) & 0xffu]
+          +BITS_TABLE_uint32[(n >> 16) & 0xffu]
+          +BITS_TABLE_uint32[(n >> 24) & 0xffu];
 }
 
 /*
 String to big_num strcuture:
-hexadecimal : implemented.
-octadecimal : not implemented but same with hex.
-binary: diff structure.
+Hexadecimal : implemented.
+Octadecimal : not implemented but same structure with hex.
+Decimal: <- not a 2 power base, the units does not match with permitted bits.
+Binary: diff structure.
 */
 
 #define BIT_WORD_SIZE 8*WORD_SIZE
@@ -78,7 +89,8 @@ void bignum_from_bitstring(struct bn * n, char* str, int nbytes){
             j += 1;
         }
     }
-
+    
+    // initial memo
     // Memo: 1byte = 8bit
     // 32bit, int = 4bytes = 32bit
     // Get word length = WORD_SIZE(hex) - > BINARY calculation
@@ -86,6 +98,12 @@ void bignum_from_bitstring(struct bn * n, char* str, int nbytes){
     // convert them to uint8(32bit)
     // using strtol, 2 convert the string to unint8
     // assign n->array[] = integer
+}
+void bignum_from_octstring(struct bn * n, char* str, int nbytes){
+    ERROR_NOT_IMPLEMENTED_STR("Oct string routine is in developing.");
+}
+void bignum_from_decistring(struct bn * n, char* str, int nbytes){
+    ERROR_NOT_IMPLEMENTED_STR("Deci string routine is in developing.");
 }
 
 /*Utils--------------------------------------------------------------------------------*/
