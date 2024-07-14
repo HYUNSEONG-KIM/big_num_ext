@@ -22,10 +22,10 @@ int _fast_bit_count32 (unsigned int n) {
     /* 
     // Algorithm description:
     // 0xffu(16) = 255(10)  = 11111111(2)
-    // n&0xffu
-    //    n :..11101110|01101010
-    // 0xffu:..00000000|11111111
-    // n&0xffu:00000000|01101010
+    // n&0xffu part;
+    //       n : ...11101110|01101010
+    //    0xffu: ...00000000|11111111
+    // =n&0xffu: ...00000000|01101010
     // -> After the count, shift the bit to right and iteratively sum.
     */
 
@@ -34,6 +34,14 @@ int _fast_bit_count32 (unsigned int n) {
           +BITS_TABLE_uint32[(n >> 16) & 0xffu]
           +BITS_TABLE_uint32[(n >> 24) & 0xffu];
 }
+/* Additional note on bit counting with lookup table.
+If the integer data type becomes 64bit, then
+(8bit mask) : 8 byte -> 8 terms
+with n >> 32, >> 40, >>48, >> 56 
+
+16bit mask: 0xffffu, >>16, >>32, >>48, ...
+32bit mask: 0xffffffffu, >>32, >>64, ...
+*/
 
 /*
 String to big_num strcuture:
