@@ -2,9 +2,8 @@
 
 This repository is an extension routine implementation for [tiny-bignum library](https://github.com/kokke/tiny-bignum-c).
 
-The library provides good core structure to practice the custom 
-arbitrary precision integer routine with C.
-However, some utils would be more useful in practical application.
+tiny-bignum-c library provides good core structure to practice the custom 
+arbitrary precision integer routine with C, however, some utils would be more useful to use the library in practical application.
 The 
 
 ## Additional routines
@@ -60,6 +59,14 @@ Result:
 11011111 11000111 11111111 11111111
 Total 1s: 96
 ```
+
+## Further Plan
+
+1. Print routine directly print the string to the terminal -> We can change the routine to choose a buffer to print it.
+2. Octa string to big_num routine
+3. bit manipulation function: replace specific index, read specific parts of the bit string
+
+
 ## License
 
 Same with tiny-bignum, **Public domain**.
@@ -70,8 +77,12 @@ The tiny-bignum simply extended the bitarray in compile time,
 however, in real arbitrary precision system requires dynamics memory
 treatment.
 
-See GMP library, and 
+1. Determine the maximum bytes in compile time: tiny-big-num, simple and soild structure, less flexible.
+2. Dynamically allocate and free the data: GMP, flexible and powerful, requiring high huddle to develop.
 
-In Abstract Algebra by Tomas W Judson, 
-there is a practice using Chinese remainder theorem 
+If you only requires to handle large integer it would be useful but, 
+in commercial or research purpose case, it would be wise to see [List of Arbitarary Precision Arithmetic Softwares](https://en.wikipedia.org/wiki/List_of_arbitrary-precision_arithmetic_software).
+
+As a side using a number theory you can treat the larger integer with fixed precision integer datatypes.
+In Abstract Algebra by Tomas W Judson, there is a practice using Chinese remainder theorem 
 to implement arbitrary precision integer arithmetic.
