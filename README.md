@@ -4,7 +4,7 @@ This repository is an extension routine implementation for [tiny-bignum library]
 
 tiny-bignum-c library provides good core structure to practice the custom 
 arbitrary precision integer routine with C, however, some utils would be more useful to use the library in practical application.
-The 
+
 
 ## Additional routines
 
