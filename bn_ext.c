@@ -51,8 +51,21 @@ Decimal: <- not a 2 power base, the units does not match with permitted bits.
 Binary: diff structure.
 */
 
-#define BIT_WORD_SIZE 8*WORD_SIZE
-#define BIT_SIZE_DTYPE 8*sizeof(DTYPE)
+
+
+int bignum_util_str_match_nbytes(char *str, char * tmp_str){
+    // Calculate original string length
+    int nbytes = 0;
+    int str_len = 0;
+    
+    //
+    if (tmp_str != NULL & sizeof(tmp_str)/sizeof(char) >= nbytes){
+        memset(tmp_str, "\0", sizeof(tmp_str));
+    } 
+    
+
+    return nbytes;
+}
 
 void bignum_from_bitstring(struct bn * n, char* str, int nbytes){
     // nbytes represent the binary string data size, 

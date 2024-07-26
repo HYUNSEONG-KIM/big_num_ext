@@ -9,11 +9,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
+#include <errno.h>
 
 #include "bn.h"
 
-#define ERROR_NOT_IMPLEMENTED revert("Not implemented.")
-#define ERROR_NOT_IMPLEMENTED_STR(s) revert(s)
+#define ERROR_NOT_IMPLEMENTED perror("Not implemented.")
+#define ERROR_NOT_IMPLEMENTED_STR(s) perror(s)
 
 //=======================================================================
 
@@ -60,8 +61,10 @@ int _fast_bit_count(BIN_ARRAY_SIZE) (unsigned int n);
 #define BIT_WORD_SIZE 8*WORD_SIZE
 #define BIT_SIZE_DTYPE 8*sizeof(DTYPE)
 
-void bignum_from_bitstring(struct bn * n, char* str, int nbytes); 
-void bignum_from_octstring(struct bn * n, char* str, int nbytes); // Not implemented yet.
+int bignum_util_str_match_nbytes(char *str, char * tmp_str);
+
+void bignum_from_bitstring(struct bn * n, char* str,  int nbytes); 
+void bignum_from_octstring(struct bn * n, char* str,  int nbytes); // Not implemented yet.
 void bignum_from_decistring(struct bn * n, char* str, int nbytes); // Not implemented yet.
 
 /*Utils*/
