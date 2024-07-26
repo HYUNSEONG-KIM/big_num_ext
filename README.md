@@ -13,7 +13,7 @@ arbitrary precision integer routine with C, however, some utils would be more us
 3. Binary Print. Done. Simple.
 4. Binary string to big_num. Done.
 
-See `bn_ext.h`, `bn_ext.c` file for the detials.
+See `bn_ext.h`, `bn_ext.c` file for the details.
 
 ```.c
 bool bignum_is_even(struct bn* n);
@@ -27,6 +27,12 @@ void bignum_print_bits(struct bn * num, bool print_newline);
 void bignum_from_bitstring(struct bn * n, char* str, int nbytes); 
 
 ```
+
+### Python api
+
+In `bn_to_python.c/.h`, there are two macro convert the bignum object to python and vice verse.
+Since, Python already provides arbitrary integer routine, but the bighum would be great for 
+static integer calculation for speed accelration.
 
 ## Example
 
@@ -64,7 +70,8 @@ Total 1s: 96
 
 1. Print routine directly print the string to the terminal -> We can change the routine to choose a buffer to print it.
 2. Octa string to big_num routine
-3. bit manipulation function: replace specific index, read specific parts of the bit string
+3. bit manipulation function: replace specific index, read specific parts of the bit string.
+4. string matching routine. It is already implemented in python api.
 
 
 ## License
