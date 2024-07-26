@@ -30,7 +30,7 @@ void bignum_from_bitstring(struct bn * n, char* str, int nbytes);
 
 ### Python api
 
-In `bn_to_python.c/.h`, there are two macro convert the bignum object to python and vice verse.
+In `bn_to_python.c/.h`, there are two functions converting the bignum object to python and vice verse.
 Since, Python already provides arbitrary integer routine, but the bighum would be great for 
 static integer calculation for speed accelration.
 
