@@ -3,7 +3,7 @@
 PyObject *
 _PyLong_FromBignum(const struct bn *bignum_obj) {
     char hex_str[HEX_STR_SIZE];
-    bignum_to_string((struct bn *)bignum_obj, hex_str, HEX_STR_SIZE);
+    bignum_to_string(bignum_obj, hex_str, HEX_STR_SIZE);
 
     // Use base 16 to convert the hexadecimal string to a PyLongObject
     PyObject *py_long = PyLong_FromString(hex_str, NULL, 16);
