@@ -30,7 +30,10 @@ There may well be room for performance-optimizations and improvements.
 #endif
 
 /* Size of big-numbers in bytes */
-#define BIG_NUM_BYTES 128 // (*)
+// (*)
+#ifndef BIG_NUM_BYTES
+  #define BIG_NUM_BYTES 128 
+#endif
 #define BN_ARRAY_SIZE    (BIG_NUM_BYTES / WORD_SIZE)
  // original (128 / WORD_SIZE)
 

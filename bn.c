@@ -18,6 +18,13 @@ There may well be room for performance-optimizations and improvements.
 
 */
 
+
+/* 2024 Hyunseong Kim :
+I fixed or modified the api routines.
+I will keep the orgiinal structure as much as possible.
+The modified routine would be notated with (*) comment. 
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
@@ -146,15 +153,26 @@ void bignum_to_string(struct bn* n, char* str, int nbytes) // hexadecimal string
   {
     j += 1;
   }
- 
-  /* Move string j places ahead, effectively skipping leading zeros */ 
-  for (i = 0; i < (nbytes - j); ++i)
+  // Detect the bignum data is whether zero or not.
+  // (*)
+  if(j == 2*BIG_NUM_BYTES)// Empty string condition.
   {
-    str[i] = str[i + j];
+    str[0]='0'; str[1]='\0';
   }
+  else
+  {
+    /* Move string j places ahead, effectively skipping leading zeros */ 
+    for (i = 0; i < (nbytes - j); ++i)
+    {
+      str[i] = str[i + j];
+    }
 
-  /* Zero-terminate string */
-  str[i] = 0;
+    /* Zero-terminate string */
+    str[i] = 0;
+
+  }
+ 
+  
 }
 
 
