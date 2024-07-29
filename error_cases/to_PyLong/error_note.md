@@ -24,8 +24,12 @@ _PyLong_FromBignum(const struct bn *bignum_obj) {
 }
 ```
 
+### Solution
+
 The above has no problem. 
-In `bn.c`, `bignum_to_string` function,
+The problem arose in `bn.c`, `bignum_to_string` function.
+When the given `struct bn num` contains only `0` bits, 
+it returned empty string.
 
 ```
 /* Count leading zeros: */
