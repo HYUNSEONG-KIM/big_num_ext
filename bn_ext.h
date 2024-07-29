@@ -13,16 +13,21 @@
 
 #include "bn.h"
 
-#define ERROR_NOT_IMPLEMENTED perror("Not implemented.")
-#define ERROR_NOT_IMPLEMENTED_STR(s) perror(s)
+#define ERROR_NOT_IMPLEMENTED perror("Not implemented.");
+#define ERROR_NOT_IMPLEMENTED_STR(s) perror(s);
 
 //=======================================================================
 
 /* (*) Additional Utils*/
+
+
+// Utils
 bool bignum_is_even(struct bn* n);
 bool bignum_is_odd(struct bn* n);
+int bignum_str_cal_nbytes(char *str, int base); // Not implemented
 
-// Bit count routine===================
+
+// Bit routines
 unsigned int bignum_bit_count(struct bn* n);
 static const int BITS_TABLE_uint32 [256] = {
     0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
@@ -57,18 +62,26 @@ void initialize_lookup_table() {
 int _fast_bit_count(BIN_ARRAY_SIZE) (unsigned int n);
 */
 
-
+// Conversion
 #define BIT_WORD_SIZE 8*WORD_SIZE
 #define BIT_SIZE_DTYPE 8*sizeof(DTYPE)
 
-int bignum_util_str_match_nbytes(char *str, char * tmp_str);
+void bignum_from_bit_string(struct bn * n, char* str,  int nbytes); 
+void bignum_from_oct_string(struct bn * n, char* str,  int nbytes); // Not implemented yet.
+void bignum_from_dec_string(struct bn * n, char* str, int nbytes); // Not implemented yet.
 
-void bignum_from_bitstring(struct bn * n, char* str,  int nbytes); 
-void bignum_from_octstring(struct bn * n, char* str,  int nbytes); // Not implemented yet.
-void bignum_from_decistring(struct bn * n, char* str, int nbytes); // Not implemented yet.
-
-/*Utils*/
+// In_Output
 void print_bits(uint32_t num, bool print_newline);
 void bignum_print_bits(struct bn * num, bool print_newline);
+
+
+// Comparsions
+
+bool bignum_eq(struct bn * a, struct bn *b); // return 1 if both are same.
+bool bignum_gt(struct bn * a, struct bn *b); // a>b
+bool bignum_lt(struct bn * a, struct bn *b); // a<b
+bool bignum_ge(struct bn * a, struct bn *b); // a>=b
+bool bignum_le(struct bn * a, struct bn *b); // a<=b
+
 
 #endif 

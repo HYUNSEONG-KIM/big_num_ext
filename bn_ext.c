@@ -51,23 +51,34 @@ Decimal: <- not a 2 power base, the units does not match with permitted bits.
 Binary: diff structure.
 */
 
-
-
-int bignum_util_str_match_nbytes(char *str, char * tmp_str){
-    // Calculate original string length
-    int nbytes = 0;
-    int str_len = 0;
-    
-    //
-    if (tmp_str != NULL & sizeof(tmp_str)/sizeof(char) >= nbytes){
-        memset(tmp_str, "\0", sizeof(tmp_str));
-    } 
-    
-
-    return nbytes;
+int bignum_str_cal_nbytes(char *str, int base){
+    int str_len = strlen(str);
+    switch(base)
+    {
+        case 2:
+        case 8:
+        case 16:
+        case 10:
+    }
+    ERROR_NOT_IMPLEMENTED
+    return -1;
 }
 
-void bignum_from_bitstring(struct bn * n, char* str, int nbytes){
+//int bignum_util_cal_nbytes(char *str, char * tmp_str){
+//    // Calculate original string length
+//    int nbytes = 0;
+//    int str_len = 0;
+//    
+//    //
+//    if (tmp_str != NULL & sizeof(tmp_str)/sizeof(char) >= nbytes){
+//        memset(tmp_str, '\0', sizeof(tmp_str));
+//    } 
+//    
+//
+//    return nbytes;
+//}
+
+void bignum_from_bit_string(struct bn * n, char* str, int nbytes){
     // nbytes represent the binary string data size, 
     // (strlen(bit_str)>>3)
     
@@ -120,10 +131,10 @@ void bignum_from_bitstring(struct bn * n, char* str, int nbytes){
     // using strtol, 2 convert the string to unint8
     // assign n->array[] = integer
 }
-void bignum_from_octstring(struct bn * n, char* str, int nbytes){
+void bignum_from_oct_string(struct bn * n, char* str, int nbytes){
     ERROR_NOT_IMPLEMENTED_STR("Oct string routine is in developing.");
 }
-void bignum_from_decistring(struct bn * n, char* str, int nbytes){
+void bignum_from_dec_string(struct bn * n, char* str, int nbytes){
     ERROR_NOT_IMPLEMENTED_STR("Deci string routine is in developing.");
 }
 
@@ -164,6 +175,59 @@ void bignum_print_bits(struct bn * num, bool print_newline){
         }
     }
 }
+
+// Comparsions==========================================
+
+int _bignum_get_comp_index(struct bn * a, struct bn *b){
+    int i;
+    for (i=BN_ARRAY_SIZE-1; i>0; --i)
+    {
+        if((bool)(a->array[i]) || (bool)(b->array[i]))
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
+bool bignum_eq(struct bn * a, struct bn *b)
+{
+    int i;
+    for (i=0; i< BN_ARRAY_SIZE; ++i)
+    {
+        if(a->array[i] != b->array[i])
+        {
+            return false;
+        }
+    }
+    return true;
+} 
+bool bignum_gt(struct bn * a, struct bn *b)
+{
+    int i = _bignum_get_comp_index(a, b);
+    return a->array[i] > b->array[i];
+
+}
+bool bignum_lt(struct bn * a, struct bn *b)
+{
+    int i = _bignum_get_comp_index(a, b);
+    return a->array[i] < b->array[i];
+
+}
+bool bignum_ge(struct bn * a, struct bn *b)
+{
+    if(bignum_gt(a, b)){return true;}
+    if(bignum_eq(a, b)){return true;}
+    return false;
+
+}
+bool bignum_le(struct bn * a, struct bn *b)
+{
+    if(bignum_lt(a, b)){return true;}
+    if(bignum_eq(a, b)){return true;}
+    return false;
+}
+
 
 #ifdef __TESTING__
 #include <stdio.h>
