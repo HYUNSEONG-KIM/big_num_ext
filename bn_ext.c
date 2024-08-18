@@ -8,7 +8,6 @@ bool bignum_is_odd(struct  bn* n){return !(bignum_is_even(n));}
 // https://gurmeet.net/puzzles/fast-bit-counting-routines/
 unsigned int bignum_bit_count(struct bn* n){
     unsigned int count = 0;
-    int i;
     for(int i = 0; i < BN_ARRAY_SIZE; ++i){
         // block count - > sum
         count += _fast_bit_count32((unsigned int)n->array[i]); 
@@ -53,10 +52,15 @@ Binary: diff structure.
 
 int bignum_str_cal_nbytes(char *str, int base){
     int str_len = strlen(str);
+    int nbytes = 0;
     switch(base)
     {
-        case 2:
-        case 8:
+        case 2: 
+            nbytes = str_len >>3;
+            break;
+        case 8: 
+            nbytes = str_len >>2;
+            break;
         case 16:
         case 10:
     }
@@ -85,9 +89,9 @@ void bignum_from_bit_string(struct bn * n, char* str, int nbytes){
     require(n, "n is null");
     require(str, "str is null");
     require(nbytes > 0, "nbytes must be positive");
-    require((nbytes & 1) == 0, "string format must be in hex -> equal number of bytes");
+    //require((nbytes & 1) == 0, "string format must be in hex -> equal number of bytes"); // why is it? (Kim)
     
-    int str_len = 8*nbytes ;//Must be same with strlen(str);
+    int str_len = 8*nbytes; //Must be same with strlen(str);
 
     if (str_len > BIT_SIZE_DTYPE){
         require((nbytes % (sizeof(DTYPE))) == 0, "Bit string length must be a multiple of (sizeof(DTYPE)) characters");
@@ -109,8 +113,8 @@ void bignum_from_bit_string(struct bn * n, char* str, int nbytes){
         char tmp_str[BIT_WORD_SIZE+1];
 
         while (i >=0){
-            strncpy(tmp_str, &str[i], 32);
-            tmp_str[32] = '\0';
+            strncpy(tmp_str, &str[i], BIT_WORD_SIZE);
+            tmp_str[BIT_WORD_SIZE] = '\0';
             tmp = 0;
             tmp = (DTYPE)strtoul(&tmp_str[0] , NULL, 2); 
             
