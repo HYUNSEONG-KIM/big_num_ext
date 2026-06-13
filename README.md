@@ -3,7 +3,7 @@
 This repository is an extension routine implementation for [tiny-bignum library](https://github.com/kokke/tiny-bignum-c).
 
 tiny-bignum-c library provides good core structure to practice the custom 
-arbitrary precision integer routine with C, however, some util would be more useful to use the library in practical application.
+arbitrary precision integer routine with C, however, some utils would be more useful to use the library in practical application.
 
 In addition, it would be a good toy project to practice bit manipulation.
 
